@@ -28,9 +28,8 @@ message OrderListResponse {
     map<int64,OrderInfo> OrderList = 1;
 }
 
-service User {
+service Order {
     rpc getOrderInfoByID(Id) returns (OrderInfo);
     rpc getOrderInfoByOid(OrderId) returns (OrderInfo);
-    rpc getOrderInfoByUid(UserId) returns (OrderInfo);
     rpc getOrderListByUid(UserId) returns  (OrderListResponse);
 }
