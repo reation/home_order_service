@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "./proto";
+
+message Id {
+    int64 id = 1;
+}
+
+message OrderId {
+    int64 oid = 1;
+}
+
+message UserId {
+    int64 uid = 1;
+}
+
+message OrderInfo {
+    int64 id = 1;
+    int64 oid = 2;
+    int64 uid = 3;
+    int64 gid = 4;
+    float price = 5;
+}
+
+message OrderListResponse {
+    map<int64,OrderInfo> OrderList = 1;
+}
+
+service User {
+    rpc getOrderInfoByID(Id) returns (OrderInfo);
+    rpc getOrderInfoByOid(OrderId) returns (OrderInfo);
+    rpc getOrderInfoByUid(UserId) returns (OrderInfo);
+    rpc getOrderListByUid(UserId) returns  (OrderListResponse);
+}
