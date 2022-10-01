@@ -41,6 +41,6 @@ func (l *GetOrderListByUidLogic) GetOrderListByUid(in *proto.UserId) (*proto.Ord
 	orderInfo.Gid = 33098
 	orderInfo.Price = 99.99
 	result[1] = &orderInfo
-
+	l.Logger.Info(result)
 	return &proto.OrderListResponse{OrderList: result}, nil
 }
