@@ -28,7 +28,6 @@ func main() {
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		proto.RegisterOrderServer(grpcServer, server.NewOrderServer(ctx))
 
-		fmt.Printf("c.Mode %s...\n", c.Mode)
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)
 		}
