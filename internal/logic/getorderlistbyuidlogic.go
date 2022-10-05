@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/reation/home_order_service/internal/svc"
 	"github.com/reation/home_order_service/proto/types/proto"
@@ -26,21 +27,21 @@ func NewGetOrderListByUidLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 func (l *GetOrderListByUidLogic) GetOrderListByUid(in *proto.UserId) (*proto.OrderListResponse, error) {
 	// todo: add your logic here and delete this line
 
-	var orderInfo proto.OrderInfo
+	orderLists, err := l.svcCtx.OrderDB.FindListByUID(l.ctx, in.Uid)
+	if err != nil {
+		return nil, err
+	}
+	orderList := *orderLists
+	fmt.Println(orderList)
 	result := make(map[int64]*proto.OrderInfo)
-	orderInfo.Id = 7
-	orderInfo.Oid = 73811
-	orderInfo.Uid = in.Uid
-	orderInfo.Gid = 663098
-	orderInfo.Price = 574.39
-	result[0] = &orderInfo
-
-	orderInfo.Id = 17
-	orderInfo.Oid = 733441
-	orderInfo.Uid = in.Uid
-	orderInfo.Gid = 33098
-	orderInfo.Price = 99.99
-	result[1] = &orderInfo
-	l.Logger.Info(result)
+	for k, v := range orderList {
+		var orderInfo proto.OrderInfo
+		orderInfo.Id = v.Id
+		orderInfo.Oid = v.Id
+		orderInfo.Uid = v.UId
+		orderInfo.Gid = v.UId
+		orderInfo.Price = float32(v.RealPrice)
+	}
+	fmt.Println(result)
 	return &proto.OrderListResponse{OrderList: result}, nil
 }
